@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecommerce_fic9_new_build/data/models/requests/login_request_mode.dart';
+import 'package:flutter_ecommerce_fic9_new_build/presentation/auth/bloc/login/login_bloc.dart';
+import 'package:flutter_ecommerce_fic9_new_build/presentation/home/dashboard_page.dart';
 
 import '../../common/component/button.dart';
 import '../../common/component/custom_text_field.dart';
 import '../../common/component/spaces.dart';
 import '../../common/constant/colors.dart';
 import '../../common/constant/images.dart';
-import '../home/dashboard_page.dart';
 import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -16,12 +19,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
   @override
   void dispose() {
-    usernameController.dispose();
+    emailController.dispose();
     passwordController.dispose();
     super.dispose();
   }
@@ -64,8 +67,8 @@ class _LoginPageState extends State<LoginPage> {
           ),
           const SpaceHeight(40.0),
           CustomTextField(
-            controller: usernameController,
-            label: 'Username',
+            controller: emailController,
+            label: 'Email',
           ),
           const SpaceHeight(12.0),
           CustomTextField(
@@ -74,16 +77,45 @@ class _LoginPageState extends State<LoginPage> {
             obscureText: true,
           ),
           const SpaceHeight(24.0),
-          Button.filled(
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const DashboardPage(),
-                ),
+          BlocConsumer<LoginBloc, LoginState>(
+            // Bloc Consumer itu 1 nya dia mendengar (listener) dan 1 nya lagi build widget
+            listener: (context, state) {
+              state.maybeWhen(
+                  orElse: () {},
+                  success: (data) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const DashboardPage(),
+                      ),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Successfully Login"),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                  },
+                  error: (error) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(error),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  });
+            },
+            builder: (context, state) {
+              return Button.filled(
+                onPressed: () {
+                  final data = LoginRequestModel(
+                      identifier: emailController.text,
+                      password: passwordController.text);
+                  context.read<LoginBloc>().add(LoginEvent.login(data));
+                },
+                label: 'Masuk',
               );
             },
-            label: 'Masuk',
           ),
           const SpaceHeight(122.0),
           Center(
