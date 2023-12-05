@@ -190,7 +190,7 @@ class _HomePageState extends State<HomePage> {
               color: ColorName.primary,
             ),
           ),
-          const SpaceHeight(8.0),
+          const SpaceHeight(7.0),
           BlocBuilder<ProductsBloc, ProductsState>(
             builder: (context, state) {
               return state.maybeWhen(
@@ -208,6 +208,7 @@ class _HomePageState extends State<HomePage> {
                       crossAxisCount: 2,
                       crossAxisSpacing: 10.0,
                       mainAxisSpacing: 55.0,
+                      childAspectRatio: 3 / 4,
                     ),
                     itemCount: model.data.length,
                     itemBuilder: (context, index) => ProductCard(
