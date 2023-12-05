@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_fic9_new_build/data/datasources/auth_local_datasource.dart';
 import 'package:flutter_ecommerce_fic9_new_build/data/models/requests/login_request_mode.dart';
 import 'package:flutter_ecommerce_fic9_new_build/presentation/auth/bloc/login/login_bloc.dart';
-import 'package:flutter_ecommerce_fic9_new_build/presentation/home/dashboard_page.dart';
+import 'package:flutter_ecommerce_fic9_new_build/presentation/dashboard/dashboard_page.dart';
 
 import '../../common/component/button.dart';
 import '../../common/component/custom_text_field.dart';
