@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_fic9_new_build/data/datasources/auth_local_datasource.dart';
 import 'package:flutter_ecommerce_fic9_new_build/presentation/auth/login_page.dart';
-import 'package:flutter_ecommerce_fic9_new_build/presentation/auth/splash_page.dart';
 import 'package:flutter_ecommerce_fic9_new_build/presentation/dashboard/dashboard_page.dart';
 import 'package:flutter_ecommerce_fic9_new_build/presentation/home/widgets/bloc/products/products_bloc.dart';
 
@@ -28,7 +27,9 @@ class MyApp extends StatelessWidget {
           create: (context) => LoginBloc(),
         ),
         BlocProvider(
-          create: (context) => ProductsBloc()..add(const ProductsEvent.getAll()), // ketika ..add ditambahkan maka otomatis memanggil eventnya getAll dan ProductsBloc posisinya sudah berisi data list dari product
+          create: (context) => ProductsBloc()
+            ..add(const ProductsEvent
+                .getAll()), // ketika ..add ditambahkan maka otomatis memanggil eventnya getAll dan ProductsBloc posisinya sudah berisi data list dari product
         ),
       ],
       child: MaterialApp(
