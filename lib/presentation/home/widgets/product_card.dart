@@ -5,6 +5,7 @@ import '../../../common/component/spaces.dart';
 import '../../../common/constant/colors.dart';
 import '../../../common/constant/variables.dart';
 import '../../../data/models/responses/products_response_model.dart';
+import '../../product_detail/product_detail_page.dart';
 
 class ProductCard extends StatelessWidget {
   final Product data;
@@ -14,10 +15,10 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => const ProductDetailPage()),
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ProductDetailPage()),
+        );
       },
       child: Container(
         decoration: BoxDecoration(
