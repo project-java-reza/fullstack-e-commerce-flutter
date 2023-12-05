@@ -14,15 +14,16 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     Future.delayed(
-      const Duration(
-          milliseconds: 3000), // loading layar logo screen selama 3 detik
-      () => Navigator.pushReplacement(
+        const Duration(
+            milliseconds: 3000), // loading layar logo screen selama 3 detik
+        () {
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => const LoginPage(),
         ),
-      ),
-    );
+      );
+    });
 
     return Scaffold(
       body: Center(

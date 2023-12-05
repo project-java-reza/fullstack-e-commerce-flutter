@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecommerce_fic9_new_build/data/datasources/auth_local_datasource.dart';
 import 'package:flutter_ecommerce_fic9_new_build/data/models/requests/login_request_mode.dart';
 import 'package:flutter_ecommerce_fic9_new_build/presentation/auth/bloc/login/login_bloc.dart';
 import 'package:flutter_ecommerce_fic9_new_build/presentation/home/dashboard_page.dart';
@@ -82,7 +83,11 @@ class _LoginPageState extends State<LoginPage> {
             listener: (context, state) {
               state.maybeWhen(
                   orElse: () {},
-                  success: (data) {
+                  success: (data) async {
+                    AuthLocalDataSource()
+                        .saveAuthData(data); // ini akan menyimpan token
+
+                    // ! kalau AuthLocalDataSource tidak ditambahkan await maka akan berjalan secara asynchronous ketika sedang berjalan akan masuk ke code ScaffoldMessenger
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
