@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter_ecommerce_fic9_new_build/data/models/responses/auth_response_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
