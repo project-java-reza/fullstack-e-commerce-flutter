@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_fic9_new_build/common/constant/variables.dart';
 
 import '../../common/component/button.dart';
@@ -7,6 +8,8 @@ import '../../common/constant/colors.dart';
 import '../../common/constant/images.dart' as localImages;
 import '../../data/models/responses/products_response_model.dart';
 import '../cart/cart.page.dart';
+import '../cart/cart/bloc/cart_bloc.dart';
+import '../cart/widgets/cart_model.dart';
 import '../home/widgets/image_slider.dart';
 import '../home/widgets/product_model.dart';
 import 'widget/product_description_widget.dart';
@@ -80,6 +83,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             Flexible(
               child: Button.filled(
                 onPressed: () {
+                  context.read<CartBloc>().add(CartEvent.add(CartModel(
+                      product: widget.product,
+                      quantity: 1))); // quantity 1 karena nambah 1
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const CartPage()),
