@@ -59,8 +59,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final List<String> images = [
       Images.recomendedProductBanner,
-      Images.recomendedProductBanner,
-      Images.recomendedProductBanner,
+      Images.recomendedProductBanner2,
+      Images.recomendedProductBanner3,
+      Images.recomendedProductBanner4,
     ];
 
     return Scaffold(
