@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecommerce_fic9_new_build/common/extensions/int_ext.dart';
+import 'package:flutter_ecommerce_fic9_new_build/presentation/cart/cart/bloc/cart_bloc.dart';
 
 import 'package:flutter_ecommerce_fic9_new_build/presentation/cart/widgets/cart_model.dart';
 
 import '../../../common/component/spaces.dart';
 import '../../../common/constant/colors.dart';
-import '../../../common/constant/images.dart';
+import '../../../common/constant/images.dart' as localImages;
+import '../../../common/constant/variables.dart';
+import '../../../data/models/responses/products_response_model.dart';
 
 class CartItemWidget extends StatefulWidget {
   const CartItemWidget({
@@ -30,8 +35,8 @@ class _CartItemWidgetState extends State<CartItemWidget> {
         children: [
           ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-            child: Image.asset(
-              widget.data.imagePath,
+            child: Image.network(
+              '${Variables.baseUrl}${widget.data.product.attributes.images.data.first.attributes.url}',
               width: 72.0,
               height: 72.0,
               fit: BoxFit.cover,
@@ -45,9 +50,9 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Sepatu Nike",
-                      style: TextStyle(
+                    Text(
+                      widget.data.product.attributes.name,
+                      style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
                       ),
@@ -56,7 +61,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                     InkWell(
                       onTap: () {},
                       child: const ImageIcon(
-                        AssetImage(Images.iconTrash),
+                        AssetImage(localImages.Images.iconTrash),
                         size: 24.0,
                       ),
                     ),
@@ -67,7 +72,8 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      widget.data.priceFormat,
+                      int.parse(widget.data.product.attributes.price)
+                          .currencyFormatRp,
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
@@ -81,39 +87,40 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                         color: ColorName.border,
                         borderRadius: BorderRadius.all(Radius.circular(5.0)),
                       ),
-                      child: StatefulBuilder(
-                        builder: (context, setState) => Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                if (widget.data.quantity > 0) {
-                                  widget.data.quantity--;
-                                  setState(() {});
-                                }
-                              },
-                              child: Container(
-                                color: ColorName.white,
-                                child: const Icon(Icons.remove),
-                              ),
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              if (widget.data.quantity > 0) {
+                                // ini logic ketika data cart sudah 0 maka tidak bisa dikurangi
+                                context
+                                    .read<CartBloc>()
+                                    .add(CartEvent.remove(widget.data));
+                              }
+                            },
+                            child: Container(
+                              color: ColorName.white,
+                              child: const Icon(Icons.remove),
                             ),
-                            SizedBox(
-                              width: 40.0,
-                              child: Center(
-                                child: Text(widget.data.quantity.toString()),
-                              ),
+                          ),
+                          SizedBox(
+                            width: 40.0,
+                            child: Center(
+                              child: Text(widget.data.quantity.toString()),
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                widget.data.quantity++;
-                                setState(() {});
-                              },
-                              child: Container(
-                                color: ColorName.white,
-                                child: const Icon(Icons.add),
-                              ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              context
+                                  .read<CartBloc>()
+                                  .add(CartEvent.add(widget.data));
+                            },
+                            child: Container(
+                              color: ColorName.white,
+                              child: const Icon(Icons.add),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
