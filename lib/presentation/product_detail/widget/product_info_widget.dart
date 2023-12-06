@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce_fic9_new_build/common/extensions/int_ext.dart';
 
 import '../../../common/component/spaces.dart';
 import '../../../common/constant/colors.dart';
-import '../../home/widgets/product_model.dart';
+import '../../../data/models/responses/products_response_model.dart';
 
 // pakai stateless karena cuma nampilin data aja gada operasi click
 class ProductInfoWidget extends StatelessWidget {
   final EdgeInsetsGeometry padding;
-  final ProductModel product;
+  final Product product;
   final void Function(bool isWishlist) onWishlistTap;
 
-  const ProductInfoWidget({super.key, required this.padding, required this.product, required this.onWishlistTap});
+  const ProductInfoWidget(
+      {super.key,
+      required this.padding,
+      required this.product,
+      required this.onWishlistTap});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +30,7 @@ class ProductInfoWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                product.name,
+                product.attributes.name,
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
@@ -56,7 +61,8 @@ class ProductInfoWidget extends StatelessWidget {
         Padding(
           padding: padding,
           child: Text(
-            product.priceFormat,
+            // product.attributes.price.priceFormat // karena price ini String dan priceFormat bentuknya integer maka kita convert dulu
+            int.parse(product.attributes.price).currencyFormatRp,
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w700,
