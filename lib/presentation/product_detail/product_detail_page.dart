@@ -5,13 +5,12 @@ import 'package:flutter_ecommerce_fic9_new_build/common/constant/variables.dart'
 import '../../common/component/button.dart';
 import '../../common/component/spaces.dart';
 import '../../common/constant/colors.dart';
-import '../../common/constant/images.dart' as localImages;
+import '../../common/constant/images.dart' as local_images;
 import '../../data/models/responses/products_response_model.dart';
 import '../cart/cart.page.dart';
 import '../cart/cart/bloc/cart_bloc.dart';
 import '../cart/widgets/cart_model.dart';
 import '../home/widgets/image_slider.dart';
-import '../home/widgets/product_model.dart';
 import 'widget/product_description_widget.dart';
 import 'widget/product_info_widget.dart';
 
@@ -29,10 +28,10 @@ class ProductDetailPage extends StatefulWidget {
 class _ProductDetailPageState extends State<ProductDetailPage> {
   EdgeInsets paddingHorizontal = const EdgeInsets.symmetric(horizontal: 20.0);
   final List<String> images = [
-    localImages.Images.product3,
-    localImages.Images.product3,
-    localImages.Images.product3,
-    localImages.Images.product3,
+    local_images.Images.product3,
+    local_images.Images.product3,
+    local_images.Images.product3,
+    local_images.Images.product3,
   ];
   @override
   Widget build(BuildContext context) {
@@ -53,7 +52,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             padding: paddingHorizontal,
             product: widget.product,
             onWishlistTap: (isWishlist) {
-              // TODO: on wishlist tap
             },
           ),
           const SpaceHeight(11.0),
