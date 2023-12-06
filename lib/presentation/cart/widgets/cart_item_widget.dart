@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_fic9_new_build/common/extensions/int_ext.dart';
-import 'package:flutter_ecommerce_fic9_new_build/presentation/cart/cart/bloc/cart_bloc.dart';
-
 import 'package:flutter_ecommerce_fic9_new_build/presentation/cart/widgets/cart_model.dart';
-
 import '../../../common/component/spaces.dart';
 import '../../../common/constant/colors.dart';
 import '../../../common/constant/images.dart' as local_images;
 import '../../../common/constant/variables.dart';
+import '../bloc/cart/cart_bloc.dart';
 
 class CartItemWidget extends StatefulWidget {
   const CartItemWidget({

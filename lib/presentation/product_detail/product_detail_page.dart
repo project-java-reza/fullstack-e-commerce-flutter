@@ -7,8 +7,8 @@ import '../../common/component/spaces.dart';
 import '../../common/constant/colors.dart';
 import '../../common/constant/images.dart' as local_images;
 import '../../data/models/responses/products_response_model.dart';
+import '../cart/bloc/cart/cart_bloc.dart';
 import '../cart/cart.page.dart';
-import '../cart/cart/bloc/cart_bloc.dart';
 import '../cart/widgets/cart_model.dart';
 import '../home/widgets/image_slider.dart';
 import 'widget/product_description_widget.dart';
@@ -51,8 +51,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           ProductInfoWidget(
             padding: paddingHorizontal,
             product: widget.product,
-            onWishlistTap: (isWishlist) {
-            },
+            onWishlistTap: (isWishlist) {},
           ),
           const SpaceHeight(11.0),
           ProductDescriptionWidget(

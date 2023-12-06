@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_fic9_new_build/presentation/cart/cart.page.dart';
-
 import '../../common/component/search_input.dart';
 import '../../common/component/spaces.dart';
 import '../../common/constant/colors.dart';
 import '../../common/constant/images.dart';
-import '../cart/cart/bloc/cart_bloc.dart';
+import '../cart/bloc/cart/cart_bloc.dart';
 import 'widgets/bloc/products/products_bloc.dart';
 import 'widgets/category_button.dart';
 import 'widgets/image_slider.dart';
