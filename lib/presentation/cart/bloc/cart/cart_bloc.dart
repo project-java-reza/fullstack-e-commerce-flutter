@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_fic9_new_build/presentation/cart/widgets/cart_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -7,7 +7,8 @@ part 'cart_state.dart';
 part 'cart_bloc.freezed.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
-  CartBloc() : super(const _Loaded([])) { // list kosongan jadi ketika dibuat ini sudah siap menerima data
+  CartBloc() : super(const _Loaded([])) {
+    // list kosongan jadi ketika dibuat ini sudah siap menerima data
     on<_Add>((event, emit) {
       final currentState = state as _Loaded;
       // bila product ada di cart, maka tambahkan quantity
@@ -40,5 +41,13 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         emit(_Loaded(currentState.carts));
       }
     });
+
+    // ini untuk melakukan clear cart ketika selesai pembayaran di xendit
+    on<_Started>(
+      (event, emit) {
+        emit(const _Loading());
+        emit(const _Loaded([])); // ini dikosongin cart nya dengan string kosong
+      },
+    );
   }
 }
