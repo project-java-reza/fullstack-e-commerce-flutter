@@ -6,6 +6,7 @@ import '../../common/component/row_text.dart';
 import '../../common/component/spaces.dart';
 import '../../common/constant/colors.dart';
 import 'bloc/cart/cart_bloc.dart';
+import 'bloc/order/order_bloc.dart';
 import 'widgets/cart_item_widget.dart';
 
 class CartPage extends StatefulWidget {
@@ -169,7 +170,7 @@ class _CartPageState extends State<CartPage> {
                                   element.quantity;
                         });
                         return RowText(
-                          label: 'Total Price',
+                          label: 'Total Harga',
                           value: totalPrice.currencyFormatRp,
                         );
                       },
@@ -179,29 +180,54 @@ class _CartPageState extends State<CartPage> {
                 const SpaceHeight(12.0),
                 const RowText(
                   label: 'Biaya Pengiriman',
-                  value: 'Rp 22.000', //150000.currencyFormatRp,
+                  value: 'Free Ongkir', //150000.currencyFormatRp,
                 ),
                 const SpaceHeight(40.0),
                 const Divider(color: ColorName.border),
                 const SpaceHeight(12.0),
-                RowText(
-                  label: 'Total Harga',
-                  value: 1750000.currencyFormatRp,
-                  valueColor: ColorName.primary,
-                  fontWeight: FontWeight.w700,
-                ),
-                const SpaceHeight(16.0),
-                Button.filled(
-                  onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => const PaymentPage(
-                    //             url: '',
-                    //           )),
-                    // );
+                BlocBuilder<CartBloc, CartState>(
+                  builder: (context, state) {
+                    return state.maybeWhen(
+                      orElse: () {
+                        return RowText(
+                          label: 'Total Harga',
+                          value: 0.currencyFormatRp,
+                        );
+                      },
+                      loaded: (carts) {
+                        int totalPrice = 0;
+                        carts.forEach((element) {
+                          totalPrice +=
+                              int.parse(element.product.attributes.price) *
+                                  element.quantity;
+                        });
+                        return RowText(
+                          label: 'Total Harga',
+                          value: totalPrice.currencyFormatRp,
+                          valueColor: ColorName.primary,
+                          fontWeight: FontWeight.w700,
+                        );
+                      },
+                    ); // konsep Freezed pakainya maybeWhen, kalau tidak pakai maybeWhen semua state harus dikeluarkan
                   },
-                  label: 'Bayar Sekarang',
+                ),
+                // RowText(
+                //   label: 'Total Harga',
+                //   value: 1750000.currencyFormatRp,
+                //   valueColor: ColorName.primary,
+                //   fontWeight: FontWeight.w700,
+                // ),
+                const SpaceHeight(16.0),
+                BlocConsumer<OrderBloc, OrderState>(
+                  listener: (context, state) {
+                    // TODO: implement listener
+                  },
+                  builder: (context, state) {
+                    return Button.filled(
+                      onPressed: () {},
+                      label: 'Bayar Sekarang',
+                    );
+                  },
                 ),
               ],
             ),
