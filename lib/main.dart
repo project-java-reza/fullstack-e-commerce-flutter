@@ -7,6 +7,7 @@ import 'package:flutter_ecommerce_fic9_new_build/presentation/home/widgets/bloc/
 import 'presentation/auth/bloc/login/login_bloc.dart';
 import 'presentation/auth/bloc/register/register_bloc.dart';
 import 'presentation/cart/bloc/cart/cart_bloc.dart';
+import 'presentation/cart/bloc/order/order_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,6 +34,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => CartBloc(),
+        ),
+        BlocProvider(
+          create: (context) => OrderBloc(),
         ),
       ],
       child: MaterialApp(
