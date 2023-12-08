@@ -240,12 +240,15 @@ class _CartPageState extends State<CartPage> {
                     state.maybeWhen(
                       orElse: () {},
                       success: (response) {
+                        context.read<CartBloc>().add(const CartEvent.started()); // disini started atau cartnya kosong []
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (_) {
                               return PaymentPage(
                                 invoiceUrl: response.invoiceUrl,
+                                orderId: response.externalId,
+                                // externalId ini adalah orderId yang kita kirim
                               );
                             },
                           ),
@@ -254,6 +257,7 @@ class _CartPageState extends State<CartPage> {
                     );
                   },
                   builder: (context, state) {
+                    // ini ketika ke create order nya dan di lempar ke response success
                     return state.maybeWhen(orElse: () {
                       return Button.filled(
                         onPressed: () {
