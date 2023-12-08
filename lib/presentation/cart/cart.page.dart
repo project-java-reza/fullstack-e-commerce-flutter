@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_fic9_new_build/common/extensions/int_ext.dart';
+import 'package:flutter_ecommerce_fic9_new_build/data/models/requests/order_request_model.dart';
+import 'package:flutter_ecommerce_fic9_new_build/presentation/payment/payment_page.dart';
+import 'package:flutter_ecommerce_fic9_new_build/presentation/payment/widgets/success_page.dart';
 import '../../common/component/button.dart';
 import '../../common/component/row_text.dart';
 import '../../common/component/spaces.dart';
@@ -23,6 +26,9 @@ class _CartPageState extends State<CartPage> {
   void initState() {
     super.initState();
   }
+
+  List<Item> items = [];
+  int localTotalPrice = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -169,6 +175,17 @@ class _CartPageState extends State<CartPage> {
                               int.parse(element.product.attributes.price) *
                                   element.quantity;
                         });
+                        localTotalPrice = totalPrice;
+                        items = carts
+                            .map(
+                              (e) => Item(
+                                id: e.product.id,
+                                productName: e.product.attributes.name,
+                                price: int.parse(e.product.attributes.price),
+                                qty: e.quantity,
+                              ),
+                            )
+                            .toList();
                         return RowText(
                           label: 'Total Harga',
                           value: totalPrice.currencyFormatRp,
@@ -220,13 +237,48 @@ class _CartPageState extends State<CartPage> {
                 const SpaceHeight(16.0),
                 BlocConsumer<OrderBloc, OrderState>(
                   listener: (context, state) {
-                    // TODO: implement listener
+                    state.maybeWhen(
+                      orElse: () {},
+                      success: (response) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) {
+                              return PaymentPage(
+                                invoiceUrl: response.invoiceUrl,
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    );
                   },
                   builder: (context, state) {
-                    return Button.filled(
-                      onPressed: () {},
-                      label: 'Bayar Sekarang',
-                    );
+                    return state.maybeWhen(orElse: () {
+                      return Button.filled(
+                        onPressed: () {
+                          context.read<OrderBloc>().add(
+                                OrderEvent.order(
+                                  OrderRequestModel(
+                                    data: Data(
+                                      items: items,
+                                      totalPrice: localTotalPrice,
+                                      deliveryAddress: 'Tangerang, Banten',
+                                      courierName: 'JNE',
+                                      courierPrice: 0,
+                                      status: 'waiting-payment',
+                                    ),
+                                  ),
+                                ),
+                              );
+                        },
+                        label: 'Bayar Sekarang',
+                      );
+                    }, loading: () {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    });
                   },
                 ),
               ],
