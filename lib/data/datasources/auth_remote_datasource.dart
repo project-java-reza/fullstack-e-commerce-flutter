@@ -5,7 +5,7 @@ import 'package:flutter_ecommerce_fic9_new_build/data/models/requests/register_r
 import 'package:flutter_ecommerce_fic9_new_build/data/models/responses/auth_response_model.dart';
 import 'package:http/http.dart' as http;
 
-import '../models/requests/login_request_mode.dart';
+import '../models/requests/login_request_model.dart';
 
 class AuthRemoteDataSource {
   Future<Either<String, AuthResponseModel>> register(
