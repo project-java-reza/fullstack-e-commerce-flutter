@@ -12,8 +12,8 @@ import 'package:flutter_ecommerce_fic9_new_build/presentation/shipping_address/b
 import 'package:flutter_ecommerce_fic9_new_build/presentation/shipping_address/bloc/subdistrict/subdistrict_bloc.dart';
 import 'presentation/auth/bloc/login/login_bloc.dart';
 import 'presentation/auth/bloc/register/register_bloc.dart';
-import 'presentation/cart/bloc/bloc/get_cost_bloc.dart';
 import 'presentation/cart/bloc/cart/cart_bloc.dart';
+import 'presentation/cart/bloc/get_cost/get_cost_bloc.dart';
 import 'presentation/cart/bloc/order/order_bloc.dart';
 
 void main() {
