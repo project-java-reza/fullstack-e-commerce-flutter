@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecommerce_fic9_new_build/data/datasources/auth_local_datasource.dart';
+import 'package:flutter_ecommerce_fic9_new_build/data/models/requests/add_address_request_model.dart';
+import 'package:flutter_ecommerce_fic9_new_build/data/models/responses/province_response_model.dart';
+import 'package:flutter_ecommerce_fic9_new_build/data/models/responses/subdistrict_response_model.dart';
+import 'package:flutter_ecommerce_fic9_new_build/presentation/shipping_address/bloc/add_address/add_address_bloc.dart';
+import 'package:flutter_ecommerce_fic9_new_build/presentation/shipping_address/bloc/city/city_bloc.dart';
 
 import '../../common/component/button.dart';
 import '../../common/component/custom_dropdown.dart';
 import '../../common/component/custom_text_field2.dart';
 import '../../common/component/spaces.dart';
+import '../../data/models/responses/city_response_model.dart';
+import 'bloc/province/province_bloc.dart';
+import 'bloc/subdistrict/subdistrict_bloc.dart';
 
 class AddAddressPage extends StatefulWidget {
   const AddAddressPage({super.key});
@@ -13,28 +23,49 @@ class AddAddressPage extends StatefulWidget {
 }
 
 class _AddAddressPageState extends State<AddAddressPage> {
-  final ValueNotifier<String> selectedCountry =
-      ValueNotifier<String>('Indonesia');
-  final TextEditingController countryController = TextEditingController();
-  final TextEditingController firstNameController = TextEditingController();
-  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
-  final TextEditingController cityController = TextEditingController();
-  final TextEditingController provinceController = TextEditingController();
   final TextEditingController zipCodeController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
 
   bool isDefault = false;
 
+  Province selectedProvince = Province(
+    provinceId: '1',
+    province: 'Bali',
+  );
+
+  City selectedCity = City(
+    cityId: '1',
+    provinceId: '1',
+    province: 'Bali',
+    type: 'Kabupaten',
+    cityName: 'Badung',
+    postalCode: '80351',
+  );
+
+  SubDistrict selectedSubDistrict = SubDistrict(
+    subdistrictId: '1',
+    provinceId: '1',
+    province: 'Bali',
+    cityId: '1',
+    city: 'Badung',
+    type: 'Kabupaten',
+    subdistrictName: 'Kuta',
+  );
+
+  @override
+  void initState() {
+    // BlocProvider.of<ProvinceBloc>(context).add(const ProvinceEvent.getAll()); bisa pakai ini atau context.read
+    context.read<ProvinceBloc>().add(const ProvinceEvent
+        .getAll()); // ketika buka halaman dropdown dia akan load
+    super.initState();
+  }
+
   @override
   void dispose() {
-    selectedCountry.dispose();
-    countryController.dispose();
-    firstNameController.dispose();
-    lastNameController.dispose();
+    nameController.dispose();
     addressController.dispose();
-    cityController.dispose();
-    provinceController.dispose();
     zipCodeController.dispose();
     phoneNumberController.dispose();
     super.dispose();
@@ -51,7 +82,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
         children: [
           const SpaceHeight(24.0),
           CustomTextField2(
-            controller: firstNameController,
+            controller: nameController,
             label: 'Nama Lengkap',
             keyboardType: TextInputType.name,
           ),
@@ -69,25 +100,96 @@ class _AddAddressPageState extends State<AddAddressPage> {
             keyboardType: TextInputType.phone,
           ),
           const SpaceHeight(24.0),
-          CustomDropdown(
-            value: 'DIY',
-            items: const ['DIY', 'JATENG'],
-            label: 'Provinsi',
-            onChanged: (value) {},
+          BlocBuilder<ProvinceBloc, ProvinceState>(
+            builder: (context, state) {
+              return state.maybeWhen(orElse: () {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }, loaded: (provinces) {
+                selectedProvince = provinces.first;
+                return CustomDropdown<Province>(
+                  value: selectedProvince,
+                  items: provinces,
+                  label: 'Provinsi',
+                  onChanged: (value) {
+                    setState(() {
+                      selectedProvince = value!;
+                      context.read<CityBloc>().add(
+                            // artinya kalau province sudah dipilih dia akan mainin block city
+                            CityEvent.getAllByProvinceId(
+                              selectedProvince.provinceId,
+                            ),
+                          );
+                    });
+                  },
+                );
+              });
+            },
           ),
           const SpaceHeight(24.0),
-          CustomDropdown(
-            value: 'Sleman',
-            items: const ['Sleman', 'Bantul'],
-            label: 'Kota/Kabupaten',
-            onChanged: (value) {},
+          BlocBuilder<CityBloc, CityState>(
+            builder: (context, state) {
+              return state.maybeWhen(orElse: () {
+                return CustomDropdown(
+                  value: '-',
+                  items: const ['-'],
+                  label: 'Kota/Kabupaten',
+                  onChanged: (value) {},
+                );
+              }, loading: () {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }, loaded: (cities) {
+                selectedCity = cities.first;
+                return CustomDropdown<City>(
+                  value: selectedCity,
+                  items: cities,
+                  label: 'Kota/Kabupaten',
+                  onChanged: (value) {
+                    setState(() {
+                      selectedCity = value!;
+                      context.read<SubdistrictBloc>().add(
+                            SubdistrictEvent.getAllByCityId(
+                              selectedCity.cityId,
+                            ),
+                          );
+                    });
+                  },
+                );
+              });
+            },
           ),
           const SpaceHeight(24.0),
-          CustomDropdown(
-            value: 'Mlati',
-            items: const ['Mlati', 'Turi'],
-            label: 'Kecamatan',
-            onChanged: (value) {},
+          BlocBuilder<SubdistrictBloc, SubdistrictState>(
+            builder: (context, state) {
+              return state.maybeWhen(orElse: () {
+                return CustomDropdown(
+                  value: '-',
+                  items: const ['-'],
+                  label: 'Kecamatan',
+                  onChanged: (value) {},
+                );
+              }, loading: () {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }, loaded: (subDistricts) {
+                // parameter ini berasal dari bloc
+                selectedSubDistrict = subDistricts.first;
+                return CustomDropdown<SubDistrict>(
+                  value: selectedSubDistrict,
+                  items: subDistricts,
+                  label: 'Kecamatan',
+                  onChanged: (value) {
+                    setState(() {
+                      selectedSubDistrict = value!;
+                    });
+                  },
+                );
+              });
+            },
           ),
           const SpaceHeight(24.0),
           CustomTextField2(
@@ -109,11 +211,51 @@ class _AddAddressPageState extends State<AddAddressPage> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Button.filled(
-          onPressed: () {
-            Navigator.pop(context);
+        child: BlocConsumer<AddAddressBloc, AddAddressState>(
+          listener: (context, state) {
+            state.maybeWhen(
+              orElse: () {},
+              loaded: (response) {
+                Navigator.pop(context, response);
+              },
+            );
           },
-          label: 'Tambah Alamat',
+          builder: (context, state) {
+            return state.maybeWhen(orElse: () {
+              return Button.filled(
+                onPressed: () async {
+                  // get userID from local storage
+                  final userId = (await AuthLocalDataSource().getUser()).id;
+                  context.read<AddAddressBloc>().add(
+                        AddAddressEvent.addAddress(
+                          name: nameController.text,
+                          address: addressController.text,
+                          phone: phoneNumberController.text,
+                          provinceId: selectedProvince.provinceId,
+                          cityId: selectedCity.cityId,
+                          subdistrictId: selectedSubDistrict.subdistrictId,
+                          provinceName: selectedProvince.province,
+                          cityName: selectedCity.cityName,
+                          subdistrictName: selectedSubDistrict.subdistrictName,
+                          codePos: zipCodeController.text,
+                          userId: userId!.toString(),
+                          isDefault: isDefault,
+                        ),
+                      );
+                },
+                label: 'Tambah Alamat',
+              );
+            }, loading: () {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }, error: (message) {
+              return Button.filled(
+                onPressed: () {},
+                label: 'Error',
+              );
+            });
+          },
         ),
       ),
     );
