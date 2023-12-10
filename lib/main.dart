@@ -5,8 +5,14 @@ import 'package:flutter_ecommerce_fic9_new_build/presentation/auth/login_page.da
 import 'package:flutter_ecommerce_fic9_new_build/presentation/dashboard/dashboard_page.dart';
 import 'package:flutter_ecommerce_fic9_new_build/presentation/home/widgets/bloc/products/products_bloc.dart';
 import 'package:flutter_ecommerce_fic9_new_build/presentation/payment/bloc/order/order_detail_bloc.dart';
+import 'package:flutter_ecommerce_fic9_new_build/presentation/shipping_address/bloc/add_address/add_address_bloc.dart';
+import 'package:flutter_ecommerce_fic9_new_build/presentation/shipping_address/bloc/city/city_bloc.dart';
+import 'package:flutter_ecommerce_fic9_new_build/presentation/shipping_address/bloc/get_address/get_address_bloc.dart';
+import 'package:flutter_ecommerce_fic9_new_build/presentation/shipping_address/bloc/province/province_bloc.dart';
+import 'package:flutter_ecommerce_fic9_new_build/presentation/shipping_address/bloc/subdistrict/subdistrict_bloc.dart';
 import 'presentation/auth/bloc/login/login_bloc.dart';
 import 'presentation/auth/bloc/register/register_bloc.dart';
+import 'presentation/cart/bloc/bloc/get_cost_bloc.dart';
 import 'presentation/cart/bloc/cart/cart_bloc.dart';
 import 'presentation/cart/bloc/order/order_bloc.dart';
 
@@ -41,6 +47,24 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => OrderDetailBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ProvinceBloc(),
+        ),
+        BlocProvider(
+          create: (context) => CityBloc(),
+        ),
+        BlocProvider(
+          create: (context) => SubdistrictBloc(),
+        ),
+        BlocProvider(
+          create: (context) => AddAddressBloc(),
+        ),
+        BlocProvider(
+          create: (context) => GetAddressBloc(),
+        ),
+        BlocProvider(
+          create: (context) => GetCostBloc(),
         ),
       ],
       child: MaterialApp(
