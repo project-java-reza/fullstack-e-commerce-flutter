@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_fic9_new_build/common/extensions/int_ext.dart';
 import 'package:flutter_ecommerce_fic9_new_build/data/models/requests/order_request_model.dart';
 import 'package:flutter_ecommerce_fic9_new_build/presentation/payment/payment_page.dart';
-import 'package:flutter_ecommerce_fic9_new_build/presentation/payment/widgets/success_page.dart';
 import '../../common/component/button.dart';
 import '../../common/component/row_text.dart';
 import '../../common/component/spaces.dart';
 import '../../common/constant/colors.dart';
+import '../shipping_address/shipping_address_page.dart';
 import 'bloc/cart/cart_bloc.dart';
 import 'bloc/order/order_bloc.dart';
 import 'widgets/cart_item_widget.dart';
@@ -60,25 +60,22 @@ class _CartPageState extends State<CartPage> {
               });
             },
           ),
-          //if (carts.isNotEmpty) const SpaceHeight(16.0),
-          //button for choose shipping address
-          //if (carts.isNotEmpty)
-          // Container(
-          //   margin: EdgeInsets.symmetric(horizontal: 40),
-          //   child: Button.filled(
-          //     width: 60,
-          //     onPressed: () {
-          //       Navigator.push(
-          //         context,
-          //         MaterialPageRoute(
-          //             builder: (context) => const ShippingAddressPage()),
-          //       );
-          //     },
-          //     label: 'Pilih Alamat Pengiriman',
-          //   ),
-          // ),
-          const SpaceHeight(16.0),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            child: Button.filled(
+              width: 60,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ShippingAddressPage()),
+                );
+              },
+              label: 'Pilih Alamat Pengiriman',
+            ),
+          ),
 
+          const SpaceHeight(16.0),
           // show alamat pengiriman
           Container(
             padding: const EdgeInsets.all(16.0),
@@ -240,7 +237,8 @@ class _CartPageState extends State<CartPage> {
                     state.maybeWhen(
                       orElse: () {},
                       success: (response) {
-                        context.read<CartBloc>().add(const CartEvent.started()); // disini started atau cartnya kosong []
+                        context.read<CartBloc>().add(const CartEvent
+                            .started()); // disini started atau cartnya kosong []
                         Navigator.push(
                           context,
                           MaterialPageRoute(
