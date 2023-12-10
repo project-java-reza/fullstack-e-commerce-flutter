@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_fic9_new_build/common/extensions/int_ext.dart';
 import 'package:flutter_ecommerce_fic9_new_build/data/models/requests/order_request_model.dart';
-import 'package:flutter_ecommerce_fic9_new_build/presentation/cart/bloc/bloc/get_cost_bloc.dart';
 import 'package:flutter_ecommerce_fic9_new_build/presentation/payment/payment_page.dart';
 import 'package:flutter_ecommerce_fic9_new_build/presentation/shipping_address/bloc/get_address/get_address_bloc.dart';
 import '../../common/component/button.dart';
@@ -13,6 +12,7 @@ import '../../common/component/spaces.dart';
 import '../../common/constant/colors.dart';
 import '../shipping_address/shipping_address_page.dart';
 import 'bloc/cart/cart_bloc.dart';
+import 'bloc/get_cost/get_cost_bloc.dart';
 import 'bloc/order/order_bloc.dart';
 import 'widgets/cart_item_widget.dart';
 
