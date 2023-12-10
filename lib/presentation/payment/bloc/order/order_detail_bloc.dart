@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_fic9_new_build/data/datasources/order_remote_datasource.dart';
-import 'package:flutter_ecommerce_fic9_new_build/data/models/responses/order_detail_response.dart';
+import 'package:flutter_ecommerce_fic9_new_build/data/models/responses/order_detail_response_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'order_detail_event.dart';
