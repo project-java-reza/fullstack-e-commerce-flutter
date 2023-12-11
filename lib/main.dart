@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_fic9_new_build/data/datasources/auth_local_datasource.dart';
 import 'package:flutter_ecommerce_fic9_new_build/presentation/auth/login_page.dart';
 import 'package:flutter_ecommerce_fic9_new_build/presentation/dashboard/dashboard_page.dart';
-import 'package:flutter_ecommerce_fic9_new_build/presentation/home/widgets/bloc/products/products_bloc.dart';
+import 'package:flutter_ecommerce_fic9_new_build/presentation/order/bloc/buyer_order/buyer_order_bloc.dart';
+import 'package:flutter_ecommerce_fic9_new_build/presentation/order/bloc/cek_resi/cek_resi_bloc.dart';
 import 'package:flutter_ecommerce_fic9_new_build/presentation/payment/bloc/order/order_detail_bloc.dart';
 import 'package:flutter_ecommerce_fic9_new_build/presentation/shipping_address/bloc/add_address/add_address_bloc.dart';
 import 'package:flutter_ecommerce_fic9_new_build/presentation/shipping_address/bloc/city/city_bloc.dart';
@@ -15,6 +16,7 @@ import 'presentation/auth/bloc/register/register_bloc.dart';
 import 'presentation/cart/bloc/cart/cart_bloc.dart';
 import 'presentation/cart/bloc/get_cost/get_cost_bloc.dart';
 import 'presentation/cart/bloc/order/order_bloc.dart';
+import 'presentation/home/bloc/products/products_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -65,6 +67,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => GetCostBloc(),
+        ),
+        BlocProvider(
+          create: (context) => BuyerOrderBloc(),
+        ),
+        BlocProvider(
+          create: (context) => CekResiBloc(),
         ),
       ],
       child: MaterialApp(
