@@ -4,6 +4,8 @@ import 'package:flutter_ecommerce_fic9_new_build/data/models/responses/city_resp
 import 'package:flutter_ecommerce_fic9_new_build/data/models/responses/cost_response_model.dart';
 import 'package:flutter_ecommerce_fic9_new_build/data/models/responses/province_response_model.dart';
 import 'package:flutter_ecommerce_fic9_new_build/data/models/responses/subdistrict_response_model.dart';
+import 'package:flutter_ecommerce_fic9_new_build/data/models/responses/waybill_failed_response_model.dart';
+import 'package:flutter_ecommerce_fic9_new_build/data/models/responses/waybill_success_response_model.dart';
 import 'package:http/http.dart' as http;
 
 class RajaOngkirRemoteDatasource {
@@ -82,6 +84,30 @@ class RajaOngkirRemoteDatasource {
       return right(CostResponseModel.fromJson(response.body));
     } else {
       return left('Error');
+    }
+  }
+
+  Future<Either<WaybillFailedResponseModel, WaybillSuccessResponseModel>>
+      getWayBill(
+    String waybill,
+    String courier,
+  ) async {
+    final url = Uri.parse('https://pro.rajaongkir.com/api/waybill');
+    final response = await http.post(
+      url,
+      headers: {
+        'key': Variables.rajaOngkirKey,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: {
+        'waybill': waybill,
+        'courier': courier,
+      },
+    );
+    if (response.statusCode == 200) {
+      return right(WaybillSuccessResponseModel.fromJson(response.body));
+    } else {
+      return left(WaybillFailedResponseModel.fromJson(response.body));
     }
   }
 }
