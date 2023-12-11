@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce_fic9_new_build/presentation/account/account_page.dart';
+import 'package:flutter_ecommerce_fic9_new_build/presentation/cart/cart.page.dart';
 import 'package:flutter_ecommerce_fic9_new_build/presentation/home/home_page.dart';
 
 import '../../common/constant/colors.dart';
@@ -17,10 +18,10 @@ class _DashboardPageState extends State<DashboardPage> {
 
   final List<Widget> _pages = [
     const HomePage(),
-    const Center(
-      child: Text('Explore Page'),
-    ),
-    const Center(child: Text('Cart Page')),
+    // const Center(
+    //   child: Text('Explore Page'),
+    // ),
+    const CartPage(),
     const AccountPage(), // button logout
   ];
 
@@ -43,10 +44,6 @@ class _DashboardPageState extends State<DashboardPage> {
           BottomNavigationBarItem(
             icon: ImageIcon(AssetImage(Images.iconHome)),
             label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage(Images.iconSearch)),
-            label: 'Explore',
           ),
           BottomNavigationBarItem(
             icon: ImageIcon(AssetImage(Images.iconCart)),
