@@ -63,7 +63,6 @@ class _ShippingAddressPageState extends State<ShippingAddressPage> {
               );
             },
             loaded: (data) {
-              idAddress = data.data.first.id;
               return ListView.separated(
                 padding: const EdgeInsets.all(16.0),
                 separatorBuilder: (context, index) => const SpaceHeight(16.0),
