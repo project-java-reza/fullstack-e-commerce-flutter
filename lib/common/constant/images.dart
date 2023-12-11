@@ -37,4 +37,10 @@ class Images {
 
   // icon trash
   static const String iconTrash = 'assets/icons/Trash.png';
+
+  // icon bag
+  static const String iconBag = 'assets/icons/Bag.png';
+
+  // icon location
+  static const String iconLocation = 'assets/icons/Location.png';
 }
