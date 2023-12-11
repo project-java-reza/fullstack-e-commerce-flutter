@@ -4,6 +4,7 @@ import 'package:flutter_ecommerce_fic9_new_build/data/datasources/auth_local_dat
 import 'package:flutter_ecommerce_fic9_new_build/data/models/requests/add_address_request_model.dart';
 import 'package:flutter_ecommerce_fic9_new_build/data/models/requests/order_request_model.dart';
 import 'package:flutter_ecommerce_fic9_new_build/data/models/responses/add_address_response_model.dart';
+import 'package:flutter_ecommerce_fic9_new_build/data/models/responses/buyer_order_response.dart';
 import 'package:flutter_ecommerce_fic9_new_build/data/models/responses/get_address_response_model.dart';
 import 'package:flutter_ecommerce_fic9_new_build/data/models/responses/order_response_model.dart';
 import 'package:http/http.dart' as http;
@@ -46,6 +47,25 @@ class OrderRemoteDataSource {
 
     if (response.statusCode == 200) {
       return right(OrderDetailResponseModel.fromJson(response.body));
+    } else {
+      return left('Server Error');
+    }
+  }
+
+  Future<Either<String, BuyerOrderResponseModel>> getOrderByBuyerId() async {
+    final token = await AuthLocalDataSource().getToken();
+    final user = await AuthLocalDataSource().getUser();
+    final response = await http.get(
+      Uri.parse(
+          '${Variables.baseUrl}/api/orders?filters[buyerId][\$eq]=${user.id}}'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return right(BuyerOrderResponseModel.fromJson(response.body));
     } else {
       return left('Server Error');
     }
