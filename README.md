@@ -19,6 +19,7 @@ git clone <repository url> <destination folder>
 ## Authentication
 
 ### Register Admin
+
 #### Request Body :
 - Method: POST
 - Endpoint: `http://localhost:1337/admin/auth/register-admin`
@@ -44,7 +45,7 @@ git clone <repository url> <destination folder>
 ```json
 
 {
-    "data": "OK",
+    "status": "OK",
     "jwt": "Bearer Token",
     "admin": {
         "firstName": "admin",
@@ -61,7 +62,7 @@ git clone <repository url> <destination folder>
 
 ```
 
-### Response Body (Failed) this value is required
+### Response Body (Failed) this value is required :
 
 ```json
 
@@ -113,7 +114,7 @@ git clone <repository url> <destination folder>
 
 ```
 
-### Response Body (Failed) password
+### Response Body (Failed) password :
 
 ```json
 
@@ -149,9 +150,72 @@ git clone <repository url> <destination folder>
 
 ```
 
+### Login Admin
 
+#### Request Body :
+- Method: POST
+- Endpoint: ``
+- Header :
+    - Content-Type: application/json
+    - Accept: application/json
+- Body :
+
+```json
+
+{
+    "identifier": "rizqirezaardiansyahadmin@gmail.com",
+    "password": "password#21",
+}
+
+```
+
+### Response Body (Success) :
+```json
+
+{
+    "status": "OK",
+    "jwt": "Bearer token",
+     "user": {
+        "id": 14,
+        "username": "fullstack_jay",
+        "email": "rizqirezaardiansyahadmin@gmail.com",
+        "provider": "local",
+        "confirmed": true,
+        "blocked": false,
+        "createdAt": "2023-12-05T01:03:17.477Z",
+        "updatedAt": "2023-12-05T01:03:17.477Z"
+    }
+}
+
+```
+
+### Response Body (Failed) :
+
+```json
+
+ "data": null,
+    "error": {
+        "status": 400,
+        "name": "ValidationError",
+        "message": "invalid creadential",
+        "details": {
+            "errors": [
+                {
+                    "path": [
+                        "identifier"
+                    ]
+                    "message": "password is required",
+                    "name": "ValidationError"
+                }
+            ]
+        }
+    }
+
+
+```
 
 ### Register User
+
 #### Request Body :
 - Method: POST
 - Endpoint: `localhost:1337/api/auth/local/register`
@@ -172,7 +236,7 @@ git clone <repository url> <destination folder>
 
 ```json
 {
-    "data": "OK",
+    "status": "OK",
     "jwt": "Bearer Token",
     "user": {
         "id": 1,
@@ -188,7 +252,7 @@ git clone <repository url> <destination folder>
 
 ```
 
-### Response Body (Failed) email is a required field
+### Response Body (Failed) email is a required field :
 
 ```json
 {
@@ -213,7 +277,7 @@ git clone <repository url> <destination folder>
 
 ```
 
-### Response Body (Failed) username is a required field
+### Response Body (Failed) username is a required field :
 
 ```json
 {
@@ -238,7 +302,7 @@ git clone <repository url> <destination folder>
 
 ```
 
-### Response Body (Failed) password is a required field
+### Response Body (Failed) password is a required field :
 
 ```json
 {
@@ -263,7 +327,7 @@ git clone <repository url> <destination folder>
 
 ```
 
-## Response Body (Failed) 2 errors occured
+## Response Body (Failed) 2 errors occured :
 
 ```json
 
@@ -296,7 +360,7 @@ git clone <repository url> <destination folder>
 
 ```
 
-## Reponse Body (Failed) 3 errors occured
+## Response Body (Failed) 3 errors occured :
 
 ```json
 {
@@ -335,7 +399,7 @@ git clone <repository url> <destination folder>
 
 ```
 
-### Response Body (Failed) Email or Username already taken
+### Response Body (Failed) Email or Username already taken :
 
 ```json
 {
@@ -350,7 +414,8 @@ git clone <repository url> <destination folder>
 ```
 
 ### Login User
-#### Request Body
+
+#### Request Body :
 - Method: POST
 - Endpoint: `localhost:1337/api/auth/local`
 - Header :
@@ -366,15 +431,15 @@ git clone <repository url> <destination folder>
 
 ```
 
-### Response Body (Success)
+### Response Body (Success) :
 
 ```json
 {
-    "data": "OK",
+    "status": "OK",
     "jwt": "Bearer token",
      "user": {
         "id": 14,
-        "username": "fullstack_jau",
+        "username": "fullstack_jay",
         "email": "rizqirezaardiansyah@gmail.com",
         "provider": "local",
         "confirmed": true,
@@ -386,7 +451,7 @@ git clone <repository url> <destination folder>
 ```
 
 
-### Reponse Body (Failed) Identifier is a required
+### Response Body (Failed) Identifier is a required :
 
 ```json
 
@@ -412,7 +477,7 @@ git clone <repository url> <destination folder>
 
 ```
 
-### Reponse Body (Failed) Password is a required
+### Response Body (Failed) Password is a required :
 
 ```json
 
@@ -438,8 +503,9 @@ git clone <repository url> <destination folder>
 
 ```
 
-### Product (Add Product)
-#### Request Body 
+### Product (Add Product) Admin
+
+#### Request Body :
 - Method: POST
 - Endpoint: `localhost:1337/api/products` 
 - Header : 
@@ -450,24 +516,378 @@ git clone <repository url> <destination folder>
 ```json
 
 {
+    "status": "OK",
     "data": {
         "name": "Macbook Pro 2023",
         "description": "Chip:\nCPU 8-core dengan 6 core performa dan 2 core efisiensi\nGPU 14-core\nNeural Engine 16-core\nBandwidth memori 200 GB/dtk\nMedia engine\nH.264, HEVC, ProRes, dan ProRes RAW yang didukung hardware\nMesin dekode video\nMesin enkode video\nMesin enkode dan dekode ProRes\nDapat dikonfigurasi menjadi:\nM1 Pro dengan CPU 10-core dan GPU 14‑core\nM1 Pro dengan CPU 10‑core dan GPU 16‑core\nM1 Max dengan CPU 10‑core dan GPU 24‑core\nM1 Max dengan CPU 10‑core dan GPU 32‑core\n\nMemori\nChip Apple M1 Pro\n\nMemori terintegrasi 16 GB\nDapat dikonfigurasi menjadi 32 GB (M1 Pro atau M1 Max) atau 64 GB (M1 Max)",
-        "prices": "25000000",
+        "price": "25000000",
         "stock": 10
     }
 }
 
 ```
-### Response Body (Success)
+### Response Body (Success) :
 
 ```json
 {
+    "status": "OK",
+    "data": {
+        "id": 3,
+        "attributes": {
+            "name": "Macbook Pro 2023",
+            "description": "Chip:\nCPU 8-core dengan 6 core performa dan 2 core efisiensi\nGPU 14-core\nNeural Engine 16-core\nBandwidth memori 200 GB/dtk\nMedia engine\nH.264, HEVC, ProRes, dan ProRes RAW yang didukung hardware\nMesin dekode video\nMesin enkode video\nMesin enkode dan dekode ProRes\nDapat dikonfigurasi menjadi:\nM1 Pro dengan CPU 10-core dan GPU 14‑core\nM1 Pro dengan CPU 10‑core dan GPU 16‑core\nM1 Max dengan CPU 10‑core dan GPU 24‑core\nM1 Max dengan CPU 10‑core dan GPU 32‑core\n\nMemori\nChip Apple M1 Pro\n\nMemori terintegrasi 16 GB\nDapat dikonfigurasi menjadi 32 GB (M1 Pro atau M1 Max) atau 64 GB (M1 Max)",
+            "price": 25000000,
+            "stock": 10,
+            "createdAt": "2023-12-15T13:43:32.982Z",
+            "updatedAt": "2023-12-15T13:43:32.982Z",
+            "publishedAt": "2023-12-15T13:43:32.978Z"
+        }
+    },
+    "meta": {}
+}
     
+```
+
+#### Product (Get All Product) Admin & User
+
+### Response Body (Success) :
+- Method : GET
+- Endpoint: `localhost:1337/api/products`
+- Header :
+    - Content-Type: application/json
+    - Accept: application/json
+- Body :
+
+```json
+
+{
+    "status": "OK",
+    "data": [
+        {
+            "id": 1,
+            "attributes": {
+                "name": "Sepatu Jordan",
+                "description": "Sepatu Basket",
+                "price": "15000000",
+                "stock": 15,
+                "createdAt": "2023-12-15T12:55:32.890Z",
+                "updatedAt": "2023-12-15T12:59:19.691Z",
+                "publishedAt": "2023-12-15T12:59:19.685Z"
+            }
+        }
+    ],
+    "meta": {
+        "pagination": {
+            "page": 1,
+            "pageSize": 25,
+            "pageCount": 1,
+            "total": 1
+        }
+    }
 }
 
 
 ```
+
+### Product (Get All Product with mime or image) Admin
+
+#### Response Body (Success) :
+- Method : GET
+- Endpoint: `localhost:1337/api/products?populate=*`
+- Header : 
+    - Content-Type: application/json
+    - Accept: application/json
+- Body :
+
+```json
+
+{
+     "status": "OK",
+     "data": [
+        {
+            "id": 1,
+            "attributes": {
+                "name": "Sepatu Jordan",
+                "description": "Sepatu Basket",
+                "price": "15000000",
+                "stock": 15,
+                "createdAt": "2023-12-15T12:55:32.890Z",
+                "updatedAt": "2023-12-15T13:20:18.021Z",
+                "publishedAt": "2023-12-15T12:59:19.685Z",
+                "images": {
+                    "data": [
+                        {
+                            "id": 1,
+                            "attributes": {
+                                "name": "jordan.jpeg",
+                                "alternativeText": null,
+                                "caption": null,
+                                "width": 218,
+                                "height": 148,
+                                "formats": null,
+                                "hash": "jordan_13ba752d97",
+                                "ext": ".jpeg",
+                                "mime": "image/jpeg",
+                                "size": 5.22,
+                                "url": "/uploads/jordan_13ba752d97.jpeg",
+                                "previewUrl": null,
+                                "provider": "local",
+                                "provider_metadata": null,
+                                "createdAt": "2023-12-15T12:55:20.918Z",
+                                "updatedAt": "2023-12-15T12:55:20.918Z"
+                            }
+                        }
+                    ]
+                },
+                "categories": {
+                    "data": [
+                        {
+                            "id": 1,
+                            "attributes": {
+                                "name": "Fashion",
+                                "description": "Baju, Celana, Sepatu, Topi, Jaket",
+                                "createdAt": "2023-12-15T13:13:24.161Z",
+                                "updatedAt": "2023-12-15T13:13:56.413Z",
+                                "publishedAt": "2023-12-15T13:13:46.900Z"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "id": 2,
+            "attributes": {
+                "name": "Macbook Pro 2023",
+                "description": "Chip:\nCPU 8-core dengan 6 core performa dan 2 core efisiensi\nGPU 14-core\nNeural Engine 16-core\nBandwidth memori 200 GB/dtk\nMedia engine\nH.264, HEVC, ProRes, dan ProRes RAW yang didukung hardware\nMesin dekode video\nMesin enkode video\nMesin enkode dan dekode ProRes\nDapat dikonfigurasi menjadi:\nM1 Pro dengan CPU 10-core dan GPU 14‑core\nM1 Pro dengan CPU 10‑core dan GPU 16‑core\nM1 Max dengan CPU 10‑core dan GPU 24‑core\nM1 Max dengan CPU 10‑core dan GPU 32‑core\n\nMemori\nChip Apple M1 Pro\n\nMemori terintegrasi 16 GB\nDapat dikonfigurasi menjadi 32 GB (M1 Pro atau M1 Max) atau 64 GB (M1 Max)",
+                "price": "20000000",
+                "stock": 10,
+                "createdAt": "2023-12-15T13:03:11.323Z",
+                "updatedAt": "2023-12-15T13:20:10.877Z",
+                "publishedAt": "2023-12-15T13:03:11.321Z",
+                "images": {
+                    "data": [
+                        {
+                            "id": 2,
+                            "attributes": {
+                                "name": "mackbook.jpg",
+                                "alternativeText": null,
+                                "caption": null,
+                                "width": 1440,
+                                "height": 810,
+                                "formats": {
+                                    "large": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/large_mackbook_d98560af56.jpg",
+                                        "hash": "large_mackbook_d98560af56",
+                                        "mime": "image/jpeg",
+                                        "name": "large_mackbook.jpg",
+                                        "path": null,
+                                        "size": 101.03,
+                                        "width": 1000,
+                                        "height": 563
+                                    },
+                                    "small": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/small_mackbook_d98560af56.jpg",
+                                        "hash": "small_mackbook_d98560af56",
+                                        "mime": "image/jpeg",
+                                        "name": "small_mackbook.jpg",
+                                        "path": null,
+                                        "size": 30.12,
+                                        "width": 500,
+                                        "height": 281
+                                    },
+                                    "medium": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/medium_mackbook_d98560af56.jpg",
+                                        "hash": "medium_mackbook_d98560af56",
+                                        "mime": "image/jpeg",
+                                        "name": "medium_mackbook.jpg",
+                                        "path": null,
+                                        "size": 60.52,
+                                        "width": 750,
+                                        "height": 422
+                                    },
+                                    "thumbnail": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/thumbnail_mackbook_d98560af56.jpg",
+                                        "hash": "thumbnail_mackbook_d98560af56",
+                                        "mime": "image/jpeg",
+                                        "name": "thumbnail_mackbook.jpg",
+                                        "path": null,
+                                        "size": 8.98,
+                                        "width": 245,
+                                        "height": 137
+                                    }
+                                },
+                                "hash": "mackbook_d98560af56",
+                                "ext": ".jpg",
+                                "mime": "image/jpeg",
+                                "size": 194.32,
+                                "url": "/uploads/mackbook_d98560af56.jpg",
+                                "previewUrl": null,
+                                "provider": "local",
+                                "provider_metadata": null,
+                                "createdAt": "2023-12-15T13:04:38.388Z",
+                                "updatedAt": "2023-12-15T13:04:38.388Z"
+                            }
+                        }
+                    ]
+                },
+                "categories": {
+                    "data": [
+                        {
+                            "id": 2,
+                            "attributes": {
+                                "name": "Elektronik",
+                                "description": "Handphone, Laptop, TV, Mesin Cuci",
+                                "createdAt": "2023-12-15T13:14:37.578Z",
+                                "updatedAt": "2023-12-15T13:14:39.261Z",
+                                "publishedAt": "2023-12-15T13:14:39.256Z"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "meta": {
+        "pagination": {
+            "page": 1,
+            "pageSize": 25,
+            "pageCount": 1,
+            "total": 2
+        }
+    }
+}
+
+```
+
+### Category (Add Category) Admin
+
+#### Request Body : 
+- Method: POST
+- Endpoint: `localhost:1337/api/categories`
+- Header : 
+    - Content-Type: application/json
+    - Accept: application/json
+- Body : 
+
+```json
+
+{
+    "data": {
+        "name": "Kecantikan",
+        "description": "Serum, Pelembap, Natural "
+    }
+}
+
+```
+
+### Reponse Body (Success) :
+
+```json
+
+{
+    "status": "OK",
+    "data": {
+        "id": 3,
+        "attributes": {
+            "name": "Kecantikan",
+            "description": "Serum, Pelembap, Natural ",
+            "createdAt": "2023-12-15T13:59:45.353Z",
+            "updatedAt": "2023-12-15T13:59:45.353Z",
+            "publishedAt": "2023-12-15T13:59:45.349Z",
+            "products": {
+                "data": []
+            }
+        }
+    },
+    "meta": {}
+}
+
+```
+
+### Category (Get All Categories) Admin
+
+#### Response Body (Success) :
+- Method : GET
+- Endpoint: `localhost:1337/api/categories?populate=*`
+- Header :
+    - Content-Type: application/json
+    - Accept: application/json
+- Body : 
+
+```json
+
+{
+    "data": [
+        {
+            "id": 1,
+            "attributes": {
+                "name": "Fashion",
+                "description": "Baju, Celana, Sepatu, Topi, Jaket",
+                "createdAt": "2023-12-15T13:13:24.161Z",
+                "updatedAt": "2023-12-15T13:13:56.413Z",
+                "publishedAt": "2023-12-15T13:13:46.900Z",
+                "products": {
+                    "data": [
+                        {
+                            "id": 1,
+                            "attributes": {
+                                "name": "Sepatu Jordan",
+                                "description": "Sepatu Basket",
+                                "price": "15000000",
+                                "stock": 15,
+                                "createdAt": "2023-12-15T12:55:32.890Z",
+                                "updatedAt": "2023-12-15T13:20:18.021Z",
+                                "publishedAt": "2023-12-15T12:59:19.685Z"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "id": 2,
+            "attributes": {
+                "name": "Elektronik",
+                "description": "Handphone, Laptop, TV, Mesin Cuci",
+                "createdAt": "2023-12-15T13:14:37.578Z",
+                "updatedAt": "2023-12-15T13:14:39.261Z",
+                "publishedAt": "2023-12-15T13:14:39.256Z",
+                "products": {
+                    "data": [
+                        {
+                            "id": 2,
+                            "attributes": {
+                                "name": "Macbook Pro 2023",
+                                "description": "Chip:\nCPU 8-core dengan 6 core performa dan 2 core efisiensi\nGPU 14-core\nNeural Engine 16-core\nBandwidth memori 200 GB/dtk\nMedia engine\nH.264, HEVC, ProRes, dan ProRes RAW yang didukung hardware\nMesin dekode video\nMesin enkode video\nMesin enkode dan dekode ProRes\nDapat dikonfigurasi menjadi:\nM1 Pro dengan CPU 10-core dan GPU 14‑core\nM1 Pro dengan CPU 10‑core dan GPU 16‑core\nM1 Max dengan CPU 10‑core dan GPU 24‑core\nM1 Max dengan CPU 10‑core dan GPU 32‑core\n\nMemori\nChip Apple M1 Pro\n\nMemori terintegrasi 16 GB\nDapat dikonfigurasi menjadi 32 GB (M1 Pro atau M1 Max) atau 64 GB (M1 Max)",
+                                "price": "20000000",
+                                "stock": 10,
+                                "createdAt": "2023-12-15T13:03:11.323Z",
+                                "updatedAt": "2023-12-15T13:20:10.877Z",
+                                "publishedAt": "2023-12-15T13:03:11.321Z"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "meta": {
+        "pagination": {
+            "page": 1,
+            "pageSize": 25,
+            "pageCount": 1,
+            "total": 2
+        }
+    }
+}
+
+```
+
 
 
 
