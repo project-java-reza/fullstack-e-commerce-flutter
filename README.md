@@ -1445,6 +1445,7 @@ git clone <repository url> <destination folder>
 - Header: 
     - Content-Type: application/json
     - Accept: application/json
+    - Authorization: Basic eG5kX2RldmVsb3BtZW50XzAyaHZqSlB2Y2ZNNmFiTHJyR0llSTNrSm13azZ4TklsWjYzSVhEdDlyaFp3WHRqQU5zanpzd3F5d0xyOiA=
 - Body:
 
 ```json
